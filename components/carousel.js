@@ -1,4 +1,6 @@
-const Carousel = () => {
+const Carousel = (props) => {
+
+  const {images} = props;
   return (
     <div
       id="carouselExampleIndicators"
@@ -6,45 +8,36 @@ const Carousel = () => {
       data-ride="carousel"
     >
       <ol className="carousel-indicators">
-        <li
-          data-target="#carouselExampleIndicators"
-          data-slide-to="0"
-          className="active"
-        ></li>
-        <li
-          data-target="#carouselExampleIndicators"
-          data-slide-to="1"
-        ></li>
-        <li
-          data-target="#carouselExampleIndicators"
-          data-slide-to="2"
-        ></li>
+        {
+          images.map((image, index) => (
+            <li
+            key={image.id}
+            data-target="#carouselExampleIndicators"
+            data-slide-to={index}
+            className={ index === 0 ? `active`: ''}
+          ></li>
+          ))
+        }
+
+
       </ol>
       <div
         className="carousel-inner"
         role="listbox"
       >
-        <div className="carousel-item active">
+         {
+          images.map((image, index) => (
+            <div 
+            key={image.id}
+            className={index===0 ?`carousel-item active`: `carousel-item`}>
           <img
             className="d-block img-fluid"
-            src="http://placehold.it/900x350"
-            alt="First slide"
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            className="d-block img-fluid"
-            src="http://placehold.it/900x350"
-            alt="Second slide"
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            className="d-block img-fluid"
-            src="http://placehold.it/900x350"
-            alt="Third slide"
-          />
-        </div>
+            src={image.url}
+            alt={image.name}
+          /></div>
+          ))
+        }
+        
       </div>
       <a
         className="carousel-control-prev"
@@ -74,6 +67,12 @@ const Carousel = () => {
           Next
         </span>
       </a>
+      <style jsx>{`
+        .carousel-item {
+          max-height: 300px;
+        }
+      `}
+        </style>
     </div>
   );
 };
