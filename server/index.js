@@ -109,6 +109,46 @@ app.prepare().then(() => {
     }
   );
 
+  server.patch(
+    "/api/v1/movies/:id",
+    (req, res) => {
+      const { id } = req.params;
+      const movie = req.body;
+
+      // find movie
+      const movieIndex = moviesData.findIndex(
+        (m) => m.id === id
+      );
+
+      moviesData[movieIndex] = movie;
+
+      const pathToFile = path.join(
+        __dirname,
+        filePath
+      );
+      const stringifiedData = JSON.stringify(
+        moviesData,
+        null,
+        2
+      );
+
+      fs.writeFile(
+        pathToFile,
+        stringifiedData,
+        (err) => {
+          if (err) {
+            return res
+              .status(422)
+              .send(err);
+          }
+          return res
+            .status(200)
+            .json(movie);
+        }
+      );
+    }
+  );
+
   // server.get('/faq', (req, res) => {
   //   res.send(`
   //     <html>

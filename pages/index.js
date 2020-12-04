@@ -17,6 +17,28 @@ const Home = (props) => {
     categories,
     movies,
   } = props;
+
+  const [
+    filterForMovie,
+    setFilter,
+  ] = useState("all");
+
+  const changeCategory = (category) => {
+    setFilter(category);
+  };
+
+  const filterMovies = (movies) => {
+    if (filterForMovie === "all") {
+      return movies;
+    }
+    return movies.filter((m) => {
+      return (
+        m.genre &&
+        m.genre.includes(filterForMovie)
+      );
+    });
+  };
+
   return (
     <div>
       <div className="home-page">
@@ -24,17 +46,33 @@ const Home = (props) => {
           <div className="row">
             <div className="col-lg-3">
               <SideMenu
+                activeCategory={
+                  filterForMovie
+                }
                 categories={categories}
                 appName={"Movie DB"}
+                changeCategory={
+                  changeCategory
+                }
               />
             </div>
             <div className="col-lg-9">
               <Carousel
                 images={images}
               />
+              <h1>
+                Displaying{" "}
+                {filterForMovie ||
+                  "all"}{" "}
+                movies
+              </h1>
               <div className="row">
                 <MovieList
-                  movies={movies || []}
+                  movies={
+                    filterMovies(
+                      movies
+                    ) || []
+                  }
                 />
               </div>
             </div>

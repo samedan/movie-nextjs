@@ -3,6 +3,7 @@ import {
   getMovieById,
   deleteMovie,
 } from "../../../actions";
+import Link from "next/link";
 
 const Movie = (props) => {
   const router = useRouter();
@@ -44,18 +45,23 @@ const Movie = (props) => {
         >
           Delete
         </button>
-        <button
-          className="btn btn-warning btn-lg"
-          onClick={() =>
-            router.push(
-              `/movies/${id}/edit`
-            )
-          }
-          href="#"
-          role="button"
+        <Link
+          href="/movies/[id]/edit"
+          as={`/movies/${id}/edit`}
         >
-          Edit
-        </button>
+          <button
+            className="btn btn-warning btn-lg"
+            // onClick={() =>
+            //   router.push(
+            //     `/movies/${id}/edit`
+            //   )
+            // }
+            // href="#"
+            role="button"
+          >
+            Edit
+          </button>
+        </Link>
       </div>
       <p className="desc-text">
         {movie.longDesc}

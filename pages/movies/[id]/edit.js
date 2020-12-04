@@ -1,13 +1,12 @@
 import React from "react";
-import { getMovieById } from "../../../actions";
-// import { React } from 'react';
+import Router from "next/router";
+import {
+  getMovieById,
+  updateMovie,
+} from "../../../actions";
 import MovieCreateForm from "./../../../components/movieCreateForm";
 
 class EditMovie extends React.Component {
-  // from server
-  //   static getInitialProps({ query }) {
-  //     return { query };
-  //   }
   static async getInitialProps({
     query,
   }) {
@@ -17,26 +16,18 @@ class EditMovie extends React.Component {
     return { movie };
   }
 
-  //   state = {
-  //     movie: {
-  //       name: "",
-  //       description: "",
-  //       rating: "",
-  //       cover: "",
-  //       image: "",
-  //       longDesc: "",
-  //     },
-  //   };
-
-  //   componentDidMount() {
-  //     const { id } = this.props.query;
-  //     getMovieById(id).then((movie) => {
-  //       this.setState({ movie });
-  //     });
-  //   }
+  handleUpdateMovie = (movie) => {
+    updateMovie(movie).then(
+      (updatedMovie) => {
+        Router.push(
+          "/movies/[id]",
+          `/movies/${movie.id}`
+        );
+      }
+    );
+  };
 
   render() {
-    // const { movie } = this.state;
     const { movie } = this.props;
     return (
       <div className="container">
@@ -45,7 +36,11 @@ class EditMovie extends React.Component {
           this.state.movie
         )} */}
         <MovieCreateForm
+          submitButton={"Update"}
           initialData={movie}
+          handleFormSubmit={
+            this.handleUpdateMovie
+          }
         />
       </div>
     );

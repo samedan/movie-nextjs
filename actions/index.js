@@ -6,9 +6,10 @@ const BASE_URL =
 const MOVIE_DATA = [];
 
 const CATEGORY_DATA = [
+  { id: "c-0", name: "all" },
   { id: "c-1", name: "drama" },
   { id: "c-2", name: "action" },
-  { id: "c-3", name: "adventeru" },
+  { id: "c-3", name: "adventure" },
   { id: "c-4", name: "historical" },
 ];
 
@@ -34,6 +35,7 @@ export const getMovies = () => {
     .then((res) => res.data);
 };
 
+// GET ALL
 export const createMovie = (movie) => {
   movie.id = Math.random()
     .toString(36)
@@ -46,6 +48,7 @@ export const createMovie = (movie) => {
     .then((res) => res.data);
 };
 
+// GET id
 export const getMovieById = (id) => {
   return axios
     .get(
@@ -54,10 +57,27 @@ export const getMovieById = (id) => {
     .then((res) => res.data);
 };
 
+// PATCH id
+export const updateMovie = (movie) => {
+  return axios
+    .patch(
+      `${BASE_URL}/api/v1/movies/${movie.id}`,
+      movie
+    )
+    .then((res) => res.data);
+};
+
+// DELETE id
 export const deleteMovie = (id) => {
   return axios
     .delete(
       `${BASE_URL}/api/v1/movies/${id}`
     )
+    .then((res) => res.data);
+};
+
+export const getPosts = () => {
+  return axios
+    .get(`${BASE_URL}/api/v1/posts`)
     .then((res) => res.data);
 };
